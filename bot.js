@@ -1,20 +1,16 @@
 console.log('Start');
 
 const Discord = require('discord.js');
-const client = new Discord.Client();
-
 require('dotenv').config();
 
-client.login(process.env.BOT_TOKEN);
+const commandHandler = require('./commands');
 
-client.on('ready', () => {
+const client = new Discord.Client();
+
+client.once('ready', () => {
     console.log(`${client.user.tag} started`);
 });
 
-client.on('message', gotMessage);
+client.on('message', commandHandler);
 
-function gotMessage(msg) {
-    if (msg.content === 'Watching?') {
-        msg.channel.send('Sure');
-    }
-}
+client.login(process.env.BOT_TOKEN);
