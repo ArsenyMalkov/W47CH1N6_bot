@@ -1,8 +1,9 @@
 const moon_phase = require("./commands/moon_phase.js");
+const tarot = require("./commands/tarot.js");
 
 const commands = {
     moon_phase,
-    tarrot: function(args) {},
+    tarot
 };
 
 module.exports = function(msg) {
