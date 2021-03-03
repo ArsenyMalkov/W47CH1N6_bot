@@ -27,6 +27,7 @@ desc = [
     "The Fool is everyone - including you and me. Each step he takes on his journey feels like stepping into a brave new world. Ultimately, the journey will change him. But as the card shows, he's a trustworthy lad whose tireless hope drives him toward his goal.",
     "The Magician is the card of self-confidence and adapting to situations through intellect and sheer will. The Magician is a schemer who always has one last trick up his sleeve, who despite everything manages to stay afloat and remain in control of his own destiny.",
     "The High Priestess is a card of mystery. It shows how all our secrets hang by a delicate thread and the struggle between common sense and intuition. The High Priestess symbolizes the cold, calm waters as well as the mysteries hidden in their depths.",
+    "The Empress is a card of femininity and motherhood. She is authoritative, knows what she wants, and exhibits refinement and sensuousness. The Empress symbolizes creativity and growth, and instructs us not to dismiss our unconscious impulses, but to trust our intuition.",
     "The Emperor represents patriarchal control and is pleased with the authority and power he possesses to shape the future. The Emperor makes the rules and enforces them for the common good. But prestige has its dark sides – the Emperor is dominating and ruthless and will climb over a mountain of bodies to achieve his aim.",
     "The Hierophant symbolizes a respect for tradition. It represents one who tries to maintain the established order, even though their very character is shaped by it. The Hierophant places his faith in institutions – for the alternative is pure chaos. Only by placing his faith in order can he draw strength.",
     "The Lovers is the card of dichotomies. It points to the contradictions that clash within each of us and of the challenge of striking a balance between extremes. The Lovers is also the card of dilemmas, like The Fool who stands at the crossroads, unable to make his choice.",
@@ -47,6 +48,8 @@ desc = [
     "The World lies at the end of The Fool's long and winding journey. Wiser and more world-weary than he started out, the Fool faces a moment of reckoning. Some of us accept where our journey has led us to, while others embark on a new challenge. One thing in this World is certain – you can't have it all."
 ]
 
+const Discord = require('discord.js');
+
 module.exports = async function(msg, args) {
     var rArray = [];
     while (rArray.length < 3){
@@ -56,20 +59,31 @@ module.exports = async function(msg, args) {
     var ipast = rArray[0];
     var ipresent = rArray[1];
     var ifuture = rArray[2];
+    
+    var attachment = new Discord.MessageAttachment(tarots[ipast], 'past_tarot.webp');
+    var embed = new Discord.MessageEmbed()
+            .setTitle('**Your Past**')
+            .setColor('#9900ff')
+            .setDescription(desc[ipast])
+            .attachFiles(attachment)
+            .setImage('attachment://past_tarot.webp');
+    msg.channel.send(embed);
 
-    msg.channel.send('**Your Past**\n' + desc[ipast], {
-        files: [
-            tarots[ipast]
-        ]
-    })
-    msg.channel.send('**Your Present**\n' + desc[ipresent], {
-        files: [
-            tarots[ipresent]
-        ]
-    })
-    msg.channel.send('**Your Future**\n' + desc[ifuture], {
-        files: [
-            tarots[ifuture]
-        ]
-    })
+    attachment = new Discord.MessageAttachment(tarots[ipresent], 'present_tarot.webp');
+    embed = new Discord.MessageEmbed()
+            .setTitle('**Your Present**')
+            .setColor('#9900ff')
+            .setDescription(desc[ipresent])
+            .attachFiles(attachment)
+            .setImage('attachment://present_tarot.webp');
+    msg.channel.send(embed);
+
+    attachment = new Discord.MessageAttachment(tarots[ifuture], 'future_tarot.webp');
+    embed = new Discord.MessageEmbed()
+            .setTitle('**Your Future**')
+            .setColor('#9900ff')
+            .setDescription(desc[ifuture])
+            .attachFiles(attachment)
+            .setImage('attachment://future_tarot.webp');
+    msg.channel.send(embed);
 };
